@@ -1,0 +1,13 @@
+# Ignore the large generated dataset (GitHub doesn't need 10,000 rows of CSV)
+ad_clicks_dataset.csv
+
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+
+# Ignore environment variables (we will use these later for DB passwords)
+.env
+
+# Ignore system files
+.DS_Store
+Thumbs.db
