@@ -1,0 +1,41 @@
+- AD FRAUD RULE: Any click with a duration less than 500ms is considered a high-risk bot.
+- REGIONAL TREND: High traffic from Mumbai during 2 AM to 5 AM is often associated with server-side bot attacks.
+- BRAND SAFETY: AdFlow AI should flag any campaign that has a bot percentage higher than 15%.
+- DEVICE INSIGHT: iOS devices typically have a higher conversion rate but are more expensive per click.
+- BOT MITIGATION: If a brand exceeds 20% bot rate, the system should recommend pausing the campaign immediately.
+- TARGET AUDIENCE: Our main customers are young professionals in Mumbai interested in high-end tech.
+- OFFICE RULE: The breakroom microwave must only be used for 30-second intervals.
+- COFFEE PROTOCOL: Friday mornings are strictly for Dark Roast only.
+- DESK POLICY: No more than three sticky notes are allowed on a monitor at once.
+- WEATHER NOTE: If it rains, the balcony door must remain locked.
+- STATIONERY: All blue pens must be returned to the north cabinet by 5 PM.
+- ELEVATOR ETIQUETTE: Always let the person with the heaviest bag exit first.
+- LIGHTING: The hallway lights should be dimmed to 40% on Tuesdays.
+- PET POLICY: Only goldfishes named 'Bubbles' are allowed in the lobby.
+- GARDENING: The cactus in the corner needs exactly two drops of water weekly.
+- KITCHEN: Spoons must be organized by size, then by weight.
+- SOUND: No whistling is permitted between the hours of 1 PM and 2 PM.
+- HOLIDAY: International Talk Like a Pirate Day is an optional dress-up day.
+- PARKING: Bicycles with red bells get priority in the rack.
+- PRINTER: If the printer jams, you must apologize to it before hitting reset.
+- MEETING: No meeting shall last longer than the battery of the oldest laptop.
+- SNACK: Pretzels are for guests; crackers are for employees.
+- DECOR: The portrait of the founder must never be tilted more than 2 degrees.
+- UNIFORM: Socks must match the color of your primary mousepad.
+- TRASH: Plastic waste must be sorted by its transparency level.
+- VENDING: The machine will only accept coins minted after 2010.
+- LIBRARY: Books on the top shelf are for display, not for reading.
+- SHREDDING: Paper must be folded into a swan before being shredded.
+- WINDOW: Blinds must be at a 45-degree angle during lunch hours.
+- GYM: Treadmill #3 is reserved for people wearing neon green.
+- MAIL: Envelopes with heart stamps must be hand-delivered.
+- SECURITY: The secret password for the Wi-Fi changes every time it snows.
+- CEILING: Do not count the tiles on the ceiling during boring meetings.
+- WATER: The water cooler is for drinking, not for filling balloons.
+- SIGNAGE: 'Wet Floor' signs must be placed even if the floor is dry.
+- CLOCK: The office clock is permanently set to 5 minutes fast for motivation.
+- FILING: Folders must be color-coded based on the mood of the client.
+- KEYBOARD: Mechanical keyboards are allowed only if they don't 'click' too loud.
+- LAPTOP: Stickers on laptops must not cover the brand logo.
+- AIRCON: The AC remote is a sacred object and must not be touched by interns.
+- LUNCH: Pizza crusts must be disposed of in a separate designated bin.
