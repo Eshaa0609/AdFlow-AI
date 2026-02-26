@@ -1,15 +1,21 @@
 import psycopg2
 import csv
+import os
+from dotenv import load_dotenv
+
+# Load variables from .env file
+load_dotenv()
 
 def migrate_csv_to_db():
-    # 1. Connection Details
-    # Replace 'your_password_here' with your real pgAdmin password
+    # 1. Connection Details - Pulled safely from environment variables
     conn_params = {
-        "host": "localhost",
-        "database": "ad_tech_db",
-        "user": "postgres",
-        "password": "Eshaa@123" 
+        "host": os.getenv("DB_HOST"),
+        "database": os.getenv("DB_NAME"),
+        "user": os.getenv("DB_USER"),
+        "password": os.getenv("DB_PASSWORD")
     }
+
+    conn = None # Initialize to avoid errors in 'finally' block
 
     try:
         # 2. Connect to the "Vault"
@@ -17,14 +23,13 @@ def migrate_csv_to_db():
         conn = psycopg2.connect(**conn_params)
         cursor = conn.cursor()
 
-        # 3. Open the CSV file we generated earlier
+        # 3. Open the CSV file
         with open('ad_clicks_dataset.csv', 'r') as f:
             reader = csv.reader(f)
             next(reader)  # Skip the header row
             
             print("Uploading data to the 'click_logs' table...")
             for row in reader:
-                # SQL command to insert data
                 cursor.execute(
                     "INSERT INTO click_logs (ad_id, campaign_name, source_url, user_region, device_type, click_duration_ms, is_bot) VALUES (%s, %s, %s, %s, %s, %s, %s)",
                     row
@@ -32,7 +37,7 @@ def migrate_csv_to_db():
         
         # 4. Save (Commit) the changes
         conn.commit()
-        print(f"Success! 10,000 rows have been moved to the vault.")
+        print("Success! Data has been moved to the vault securely.")
 
     except Exception as e:
         print(f"Error during ingestion: {e}")
