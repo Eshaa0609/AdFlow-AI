@@ -2,24 +2,31 @@ import os
 from dotenv import load_dotenv
 from google import genai
 from tools_sql import get_bot_stats_by_region
-from brain import ask_adflow # We're reusing your RAG brain!
+from brain import ask_adflow
+from audit_logger import log_event # Your new logging system
 
 load_dotenv()
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 def adflow_agent(user_query):
-    print(f"🕵️ Agent Reasoning: Analyzing query -> '{user_query}'")
+    # 1. Audit Trail: Log the incoming query
+    log_event("USER_QUERY", user_query)
     
-    # 1. Decision Logic: Does the user want LIVE data?
+    # 2. Reasoning: Decision Logic
+    log_event("AGENT_THOUGHT", "Analyzing query for SQL tool necessity vs RAG fallback")
+    
     if "mumbai" in user_query.lower() or "bot rate" in user_query.lower():
-        print("🔍 Agent Action: Fetching live SQL data...")
+        # SQL Path
+        log_event("AGENT_ACTION", "Triggering SQL tool for Mumbai health check")
         stats = get_bot_stats_by_region("Mumbai")
+        log_event("TOOL_OUTPUT", f"Live data fetched: {stats}")
         
-        # 2. Reasoning: Get the rules to compare with the data
-        print("📚 Agent Action: Consulting RAG for thresholds...")
+        # RAG Path
+        log_event("AGENT_ACTION", "Consulting RAG brain for policy compliance")
         rules = ask_adflow("What is the mandatory pause threshold for bot rates?")
+        log_event("RAG_OUTPUT", "Policy thresholds retrieved")
         
-        # 3. Final Synthesis (The 'Strategist' part)
+        # 3. Final Synthesis
         prompt = f"""
         You are AdFlow, a high-level Marketing Strategist. 
         
@@ -36,18 +43,25 @@ def adflow_agent(user_query):
         QUESTION: {user_query}
         """
         
-        # Switch to the stable 2026 model path
+        log_event("AGENT_THOUGHT", "Synthesizing response with live data and policy")
+        
         response = client.models.generate_content(
             model="gemini-2.5-flash", 
             contents=prompt
         )
+        
+        # 4. Audit Trail: Log the final verdict
+        log_event("FINAL_RESPONSE", response.text)
         return response.text
     
     else:
-        # Fallback to standard RAG for general questions
-        return ask_adflow(user_query)
+        # Fallback RAG Path
+        log_event("AGENT_ACTION", "No SQL trigger detected; using standard RAG")
+        fallback_response = ask_adflow(user_query)
+        log_event("FINAL_RESPONSE", fallback_response)
+        return fallback_response
 
 if __name__ == "__main__":
-    print("\n🚀 Agent is ready.")
+    print("\n🚀 Agent is ready with Audit Logging enabled.")
     query = "What is the current status of the Mumbai campaign? Should we keep it running?"
-    print(f"\n🤖 Agent Verdict:\n{adflow_agent(query)}")
+    print(f"\n🤖 Agent Verdict:\n{adflow_agent(query)}")    
