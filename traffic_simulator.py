@@ -4,17 +4,25 @@ import random
 import time
 from datetime import datetime
 from dotenv import load_dotenv
+from psycopg2 import OperationalError
 
 # Load credentials from your .env file
 load_dotenv()
 
 def get_db_connection():
-    return psycopg2.connect(
-        host=os.getenv("DB_HOST"),
-        database=os.getenv("DB_NAME"),
-        user=os.getenv("DB_USER"),
-        password=os.getenv("DB_PASSWORD")
-    )
+    """Attempts to connect, retrying if the database isn't ready."""
+    while True:
+        try:
+            conn = psycopg2.connect(
+                host=os.getenv("DB_HOST"),
+                database=os.getenv("DB_NAME"),
+                user=os.getenv("DB_USER"),
+                password=os.getenv("DB_PASSWORD")
+            )
+            return conn
+        except OperationalError:
+            print("⏳ Database not ready yet, retrying in 2 seconds...")
+            time.sleep(2)
 
 def setup_database():
     """Ensures the table exists before we start writing."""
