@@ -4,3 +4,10 @@ psycopg2-binary
 google-genai
 python-dotenv
 plotly
+langchain
+langchain-chroma
+chromadb
+langchain-community
+sentence-transformers
+# Force CPU-only installation to avoid huge GPU driver downloads
+torch --index-url https://download.pytorch.org/whl/cpu
