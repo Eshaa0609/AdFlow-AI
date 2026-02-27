@@ -1,7 +1,7 @@
 import streamlit as st
 import plotly.graph_objects as go
 from agent import adflow_agent
-from tools_sql import get_raw_bot_rate
+from data_provider import get_raw_bot_rate
 
 st.set_page_config(page_title="AdFlow AI", page_icon="✨", layout="wide")
 

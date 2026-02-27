@@ -1,9 +1,10 @@
+# agent.py
 import os
 from dotenv import load_dotenv
 from google import genai
-from tools_sql import get_bot_stats_by_region
+from data_provider import get_campaign_metrics # Using your new dynamic provider
 from brain import ask_adflow
-from audit_logger import log_event # Your new logging system
+from audit_logger import log_event
 
 load_dotenv()
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
@@ -15,10 +16,14 @@ def adflow_agent(user_query):
     # 2. Reasoning: Decision Logic
     log_event("AGENT_THOUGHT", "Analyzing query for SQL tool necessity vs RAG fallback")
     
+    # Dynamic Data Source Selection (Set in Streamlit Secrets!)
+    data_source = os.getenv("DATA_SOURCE", "sql") 
+    
     if "mumbai" in user_query.lower() or "bot rate" in user_query.lower():
-        # SQL Path
-        log_event("AGENT_ACTION", "Triggering SQL tool for Mumbai health check")
-        stats = get_bot_stats_by_region("Mumbai")
+        # SQL Path via Data Provider
+        log_event("AGENT_ACTION", f"Triggering {data_source} tool for Mumbai health check")
+        
+        stats = get_campaign_metrics("Mumbai", source_type=data_source)
         log_event("TOOL_OUTPUT", f"Live data fetched: {stats}")
         
         # RAG Path
@@ -26,7 +31,7 @@ def adflow_agent(user_query):
         rules = ask_adflow("What is the mandatory pause threshold for bot rates?")
         log_event("RAG_OUTPUT", "Policy thresholds retrieved")
         
-        # 3. Final Synthesis
+        # 3. Final Synthesis (Restoring your specific prompt instructions)
         prompt = f"""
         You are AdFlow, a high-level Marketing Strategist. 
         
@@ -63,5 +68,5 @@ def adflow_agent(user_query):
 
 if __name__ == "__main__":
     print("\n🚀 Agent is ready with Audit Logging enabled.")
-    query = "What is the current status of the Mumbai campaign? Should we keep it running?"
-    print(f"\n🤖 Agent Verdict:\n{adflow_agent(query)}")    
+    query = "What is the current status of the Mumbai campaign?"
+    print(f"\n🤖 Agent Verdict:\n{adflow_agent(query)}")
