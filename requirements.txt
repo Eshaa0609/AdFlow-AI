@@ -9,4 +9,5 @@ langchain-chroma
 chromadb
 langchain-community
 sentence-transformers
+langchain-huggingface
 torch
