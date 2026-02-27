@@ -63,7 +63,7 @@ with st.sidebar:
                 }
             ))
             fig.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', height=250, margin=dict(l=20, r=20, t=50, b=0))
-            st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
+            st.plotly_chart(fig, width='stretch', config={'displayModeBar': False})
             
     except Exception as e:
         st.error(f"Error loading dashboard: {e}")
